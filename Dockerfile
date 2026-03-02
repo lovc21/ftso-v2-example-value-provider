@@ -1,11 +1,11 @@
-FROM node:18-slim AS nodemodules
+FROM node:25-slim@sha256:e07427bc8f075386eafa62c1ddab758815f1fd11dd8eaacb61919e8b09ab00b3 AS nodemodules
 
 WORKDIR /app
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --network-timeout 100000
 
-FROM node:18-slim AS build
+FROM node:25-slim@sha256:e07427bc8f075386eafa62c1ddab758815f1fd11dd8eaacb61919e8b09ab00b3 AS build
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . ./
 
 RUN yarn build
 
-FROM node:18-slim AS runtime
+FROM platformatic/node-caged:25-slim@sha256:2e86809930b76cce928de00d3ef107be51adaa913d963c5c82553257db2d93e5 AS runtime
 
 WORKDIR /app
 
